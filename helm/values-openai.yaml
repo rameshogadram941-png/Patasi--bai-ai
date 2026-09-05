@@ -1,0 +1,18 @@
+# Helm values additions for OpenAI and billing
+
+openai:
+  enabled: true
+  openaiApiKeySecretName: patasi-openai
+  model: gpt-4o-code
+
+redis:
+  enabled: false
+  url: redis://redis:6379/0
+
+stripe:
+  enabled: true
+  secretKeySecretName: patasi-stripe
+
+database:
+  enabled: true
+  urlSecretName: patasi-db

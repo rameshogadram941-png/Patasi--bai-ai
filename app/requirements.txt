@@ -1,2 +1,9 @@
 fastapi
 uvicorn[standard]
+httpx
+sqlalchemy
+asyncpg
+redis
+prometheus_client
+stripe
+python-dotenv
