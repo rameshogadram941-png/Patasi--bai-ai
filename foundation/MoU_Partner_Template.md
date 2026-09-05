@@ -1,14 +1,14 @@
-# Partner MoU — Patasi Bai AI Foundation (Template)
+# Partner MoU — Patasi Bai AI (Template)
 
 This Memorandum of Understanding (MoU) is between:
-1. Patasi Bai AI Foundation ("Foundation") and
+1. Patasi Bai AI (operating as Patasi Bai AI Foundation for program & legal purposes) ("Foundation") and
 2. [Partner NGO / SHG / Government Unit] ("Partner")
 
 Purpose:
 Collaborate to implement the [Pilot Name] to deliver vernacular AI tools and livelihood training to beneficiaries.
 
 Scope:
-- Roles & responsibilities of Foundation and Partner
+- Roles & responsibilities of Patasi Bai AI and Partner
 - Data sharing & consent requirements
 - Safeguarding & referral pathways
 - Financial arrangements (cost‑share, funding)
@@ -22,9 +22,19 @@ Monitoring & Reporting:
 
 Signatures:
 
-For Patasi Bai AI Foundation:
-Name:
-Title:
+For Patasi Bai AI:
+Name: Ogadram
+Title: Founder / Owner
+Date:
+
+For Patasi Bai AI (Honorary Founder):
+Name: Patasi Bai
+Title: Honorary Founder / Brand
+Date:
+
+For Patasi Bai AI (Manager / Project Lead):
+Name: Ramesh Ogadram
+Title: Manager / Project Lead
 Date:
 
 For Partner:

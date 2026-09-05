@@ -1,7 +1,7 @@
-# Pitch Deck (10 Slides) — Patasi Bai AI Foundation
+# Pitch Deck (10 Slides) — Patasi Bai AI
 
 Slide 1 — Title
-Patasi Bai AI Foundation — Vernacular AI for Women & Vulnerable Communities
+Patasi Bai AI — Vernacular AI for Women & Vulnerable Communities
 
 Slide 2 — Problem
 Millions of women and displaced people lack low-cost tools to sell, learn, and access markets. Language, literacy and connectivity barriers prevent adoption.
@@ -25,7 +25,11 @@ Slide 8 — Budget & Ask
 Seed ask: INR 60 Lakh (USD 75k) for 6‑month pilots. Budget breakdown included.
 
 Slide 9 — Team & Governance
-Interim board, advisors (tech, NGO, humanitarian), operations lead and local partners.
+Brand / Honorary Founder: Patasi Bai
+Founder / Owner: Ogadram
+Manager / Project Lead: Ramesh Ogadram
+Advisory: tech, humanitarian, legal
 
 Slide 10 — Call to Action
-Partner with us to empower women and vulnerable communities — Contact: hello@patasi.example
+Partner with Patasi Bai AI to empower women and vulnerable communities — Contact: hello@patasi.example
+Registered address (draft): Mohra Kalan, Beawar, Pali District, Raipur Tehsil, Rajasthan

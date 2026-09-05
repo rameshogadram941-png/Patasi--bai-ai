@@ -1,4 +1,4 @@
-Patasi Bai AI Foundation
+Patasi Bai AI
 
 Sample Grant Request — UNICEF / Red Cross (one page)
 
@@ -20,6 +20,7 @@ Budget summary:
 - Monitoring & evaluation: $10,000
 - Admin & contingency: $15,000
 
-Partners: Patasi Bai AI Foundation (implementer), local NGOs/SHG partners, KVKs (agri)
+Partners: Patasi Bai AI (implementer), local NGOs/SHG partners, KVKs (agri)
 
 Contact: hello@patasi.example
+Registered address (draft): Mohra Kalan, Beawar, Pali District, Raipur Tehsil, Rajasthan
