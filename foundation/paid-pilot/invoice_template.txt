@@ -1,0 +1,10 @@
+Invoice: Patasi Bai AI — Workshop for [ORG] on [DATE]
+
+Total: ₹50,000
+Advance (50%) to confirm: ₹25,000
+
+Please pay via UPI to: [UPI_ID]
+After payment, send screenshot to this chat to confirm booking. Balance ₹25,000 due on the day of the workshop.
+
+Thank you — Patasi Bai AI
+Contact: [PHONE] | hello@patasi.example

@@ -1,0 +1,18 @@
+Workshop agenda — 1 day (50 participants)
+
+09:30–10:00 — Registration & welcome, objectives (Kannada)
+10:00–11:00 — Session 1: Why digital listings & UPI matter — demo of a good WhatsApp listing
+11:00–11:15 — Tea break
+11:15–13:00 — Session 2: Hands‑on listing creation — photo, title, short description, price, packaging (participants create their first 5 listings)
+13:00–14:00 — Lunch
+14:00–15:00 — Session 3: Invoice & UPI flows — how to send invoice in Kannada, ask for payment, and reconcile (demo + practice)
+15:00–16:00 — Session 4: Order handling & basic pricing / delivery scripts (trainer + role play)
+16:00–16:30 — Q&A, support options, next steps, testimonials and signup for managed service/subscription
+
+Trainer script — bullets
+- Start with a short story: how a simple seller doubled orders after clear Kannada listing.
+- Show 2–3 live examples on a phone (good vs bad).
+- Demonstrate creating a listing in 3 steps: photo → title → 2‑line description + price + CTA.
+- Walk participants through invoice flow: create invoice text, send UPI instruction, request screenshot.
+- Role‑play: coordinator receives order → confirms payment → arranges delivery.
+- End with signup pitch: managed service / monthly support options.
