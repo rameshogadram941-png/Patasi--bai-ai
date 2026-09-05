@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "patasi-bai-ai.fullname" . }}
+  labels:
+    app: {{ include "patasi-bai-ai.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "patasi-bai-ai.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "patasi-bai-ai.name" . }}
+    spec:
+      containers:
+        - name: {{ include "patasi-bai-ai.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          resources: {{ toYaml .Values.resources | indent 10 }}
+          env:
+{{ toYaml .Values.env | indent 12 }}

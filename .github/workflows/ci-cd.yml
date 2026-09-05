@@ -1,0 +1,74 @@
+name: CI-CD Build and Deploy to EKS
+on:
+  push:
+    branches: [ main, infra/eks-ecr-helm-cicd ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Amazon ECR (OIDC)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubOIDCRole
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Configure ECR login
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push image
+        env:
+          ECR_REPOSITORY: patasi-bai-ai
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          ACCOUNT_ID=${{ secrets.AWS_ACCOUNT_ID }}
+          REGION=${{ secrets.AWS_REGION }}
+          REPO_NAME=$ECR_REPOSITORY
+          IMAGE=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+          docker build -t $IMAGE .
+          docker push $IMAGE
+
+      - name: Configure kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: Update kubeconfig (uses AWS CLI credentials from OIDC role)
+        run: |
+          aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
+
+      - name: Helm upgrade/install
+        uses: azure/helm@v1
+        with:
+          args: upgrade --install patasi ./helm -f ./helm/values.yaml --namespace default
+
+  # Fallback job using long-lived AWS credentials (if you can't use OIDC)
+  fallback-credentials:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (fallback)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}

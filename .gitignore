@@ -1,0 +1,14 @@
+# Local Python artifacts
+__pycache__/
+*.pyc
+
+# Docker
+*.tar
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# VSCode
+.vscode/
