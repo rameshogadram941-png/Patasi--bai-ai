@@ -1,0 +1,6 @@
+# Add Stripe secret placeholders to helm values
+stripe:
+  enabled: true
+  secretName: patasi-stripe
+  publishableKeySecretName: patasi-stripe-pk
+  webhookSecretName: patasi-stripe-webhook
