@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patasi-bai-ai
+  labels:
+    app: patasi-bai-ai
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: patasi-bai-ai
+  template:
+    metadata:
+      labels:
+        app: patasi-bai-ai
+    spec:
+      containers:
+        - name: app
+          image: REPLACE_IMAGE
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: patasi-bai-secrets
+                  key: DATABASE_URL
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 30

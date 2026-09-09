@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: patasi-bai-ai
+spec:
+  selector:
+    app: patasi-bai-ai
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
