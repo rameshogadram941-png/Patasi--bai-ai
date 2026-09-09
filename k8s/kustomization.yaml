@@ -1,3 +1,4 @@
+namespace: patasi-bai
 resources:
   - deployment.yaml
   - service.yaml
