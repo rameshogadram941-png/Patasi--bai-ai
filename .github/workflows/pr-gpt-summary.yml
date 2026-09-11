@@ -1,0 +1,103 @@
+name: PR GPT Summary
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  generate-summary:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate PR summary with OpenAI
+        uses: actions/github-script@v6
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          script: |
+            const title = context.payload.pull_request.title || '';
+            const body = context.payload.pull_request.body || '';
+            const prompt = `You are a concise assistant. Given a GitHub pull request title and body, produce a JSON object with two keys: "summary" (a 2-3 sentence plain-language summary suitable for the PR description) and "changelog" (a short bullet list of user-visible changes that can be used in release notes). Return ONLY valid JSON.` + "\n\nTitle:\n" + title + "\n\nBody:\n" + body;
+
+            if (!process.env.OPENAI_API_KEY) {
+              core.setFailed('OPENAI_API_KEY secret is not set. Add it in repo settings.');
+              return;
+            }
+
+            const fetch = require('node-fetch');
+            const res = await fetch('https://api.openai.com/v1/chat/completions', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` },
+              body: JSON.stringify({
+                model: 'gpt-4',
+                messages: [
+                  { role: 'system', content: 'You are a concise assistant that summarizes PRs and generates changelog bullets.' },
+                  { role: 'user', content: prompt }
+                ],
+                temperature: 0.2,
+                max_tokens: 500
+              })
+            });
+
+            if (!res.ok) {
+              const t = await res.text();
+              core.setFailed('OpenAI API error: ' + t);
+              return;
+            }
+
+            const data = await res.json();
+            const content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content ? data.choices[0].message.content.trim() : '';
+
+            // Try to extract JSON from the assistant content
+            function extractJson(text) {
+              if (!text) return null;
+              const first = text.indexOf('{');
+              const last = text.lastIndexOf('}');
+              if (first === -1 || last === -1) return null;
+              try { return JSON.parse(text.slice(first, last + 1)); } catch (e) { return null; }
+            }
+
+            let parsed = extractJson(content);
+            if (!parsed) {
+              // If assistant didn't return strict JSON, ask it to reformat
+              const fixPrompt = `The assistant output was: ${content}\n\nPlease reformat the above into valid JSON with keys 'summary' and 'changelog' only.`;
+              const res2 = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` },
+                body: JSON.stringify({
+                  model: 'gpt-4',
+                  messages: [ { role: 'system', content: 'You must return only valid JSON.' }, { role: 'user', content: fixPrompt } ],
+                  temperature: 0.0,
+                  max_tokens: 300
+                })
+              });
+              const d2 = await res2.json();
+              const c2 = d2.choices && d2.choices[0] && d2.choices[0].message && d2.choices[0].message.content ? d2.choices[0].message.content : '';
+              parsed = extractJson(c2);
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issue_number = context.payload.pull_request.number;
+
+            const commentBody = parsed ? `**AI-generated PR summary**\n\n\
+\
+\
+\
+\
+\
+\n\
+\
+**Summary:**\n${parsed.summary || '(none)'}\n\n**Changelog (for release notes):**\n${Array.isArray(parsed.changelog) ? parsed.changelog.map(s => '- ' + s).join('\n') : (parsed.changelog || '')}` : `**AI generated summary failed.**\n\nAssistant output:\n\n\
+\
+\
+\n\n\
+\n${content}`;
+
+            await github.rest.issues.createComment({ owner, repo, issue_number, body: commentBody });
